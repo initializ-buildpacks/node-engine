@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/paketo-buildpacks/node-engine/cmd/inspector/internal"
+	"github.com/initializ-buildpacks/node-engine/cmd/inspector/internal"
 	"github.com/sclevine/spec"
 
 	. "github.com/onsi/gomega"

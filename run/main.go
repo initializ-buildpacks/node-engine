@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	nodeengine "github.com/paketo-buildpacks/node-engine"
+	nodeengine "github.com/initializ-buildpacks/node-engine"
 	"github.com/paketo-buildpacks/packit/v2"
 	"github.com/paketo-buildpacks/packit/v2/cargo"
 	"github.com/paketo-buildpacks/packit/v2/chronos"
