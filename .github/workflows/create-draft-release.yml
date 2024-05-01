@@ -72,14 +72,14 @@ jobs:
         fetch-tags: true
     - name: Reset Draft Release
       id: reset
-      uses: paketo-buildpacks/github-config/actions/release/reset-draft@main
+      uses: initializ-buildpacks/github-config/actions/release/reset-draft@main
       with:
         repo: ${{ github.repository }}
         token: ${{ github.token }}
     - name: Calculate Semver Tag
       if: github.event.inputs.version == ''
       id: semver
-      uses: paketo-buildpacks/github-config/actions/tag/calculate-semver@main
+      uses: initializ-buildpacks/github-config/actions/tag/calculate-semver@main
       with:
         repo: ${{ github.repository }}
         token: ${{ github.token }}
@@ -96,15 +96,15 @@ jobs:
       run: ./scripts/package.sh --version "${{ steps.tag.outputs.tag }}"
     - name: Create Release Notes
       id: create-release-notes
-      uses: paketo-buildpacks/github-config/actions/release/notes@main
+      uses: initializ-buildpacks/github-config/actions/release/notes@main
       with:
         repo: ${{ github.repository }}
-        token: ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+        token: ${{ secrets.PAT }}
     - name: Create Release
-      uses: paketo-buildpacks/github-config/actions/release/create@main
+      uses: initializ-buildpacks/github-config/actions/release/create@main
       with:
         repo: ${{ github.repository }}
-        token: ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+        token: ${{ secrets.PAT }}
         tag_name: v${{ steps.tag.outputs.tag }}
         target_commitish: ${{ github.sha }}
         name: v${{ steps.tag.outputs.tag }}
@@ -131,7 +131,7 @@ jobs:
     if: ${{ always() && needs.unit.result == 'failure' || needs.integration.result == 'failure' || needs.release.result == 'failure' }}
     steps:
     - name: File Failure Alert Issue
-      uses: paketo-buildpacks/github-config/actions/issue/file@main
+      uses: initializ-buildpacks/github-config/actions/issue/file@main
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         repo: ${{ github.repository }}

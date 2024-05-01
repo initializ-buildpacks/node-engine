@@ -24,11 +24,11 @@ jobs:
 
     - name: Download
       id: download
-      uses: paketo-buildpacks/github-config/actions/release/download-asset@main
+      uses: initializ-buildpacks/github-config/actions/release/download-asset@main
       with:
         url: ${{ steps.event.outputs.download_url }}
         output: "/github/workspace/buildpackage.cnb"
-        token: ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+        token: ${{ secrets.PAT }}
 
     - name: Validate version
       run: |
@@ -52,11 +52,11 @@ jobs:
     - name: Push to DockerHub
       id: push
       env:
-        DOCKERHUB_USERNAME: ${{ secrets.PAKETO_BUILDPACKS_DOCKERHUB_USERNAME }}
-        DOCKERHUB_PASSWORD: ${{ secrets.PAKETO_BUILDPACKS_DOCKERHUB_PASSWORD }}
+        DOCKERHUB_USERNAME: ${{ secrets.INITIALIZ_BUILDPACKS_DOCKERHUB_USERNAME }}
+        DOCKERHUB_PASSWORD: ${{ secrets.INITIALIZ_BUILDPACKS_DOCKERHUB_PASSWORD }}
         GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
       run: |
-        REPOSITORY="${GITHUB_REPOSITORY_OWNER/-/}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" # translates 'paketo-buildpacks/bundle-install' to 'paketobuildpacks/bundle-install'
+        REPOSITORY="${GITHUB_REPOSITORY_OWNER/-/}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" # translates 'initializ-buildpacks/bundle-install' to 'initializbuildpacks/bundle-install'
         IMAGE="index.docker.io/${REPOSITORY}"
         echo "${DOCKERHUB_PASSWORD}" | sudo skopeo login --username "${DOCKERHUB_USERNAME}" --password-stdin index.docker.io
         sudo skopeo copy "oci-archive:${GITHUB_WORKSPACE}/buildpackage.cnb" "docker://${IMAGE}:${{ steps.event.outputs.tag_full }}"
@@ -72,7 +72,7 @@ jobs:
         id: ${{ github.repository }}
         version: ${{ steps.event.outputs.tag_full }}
         address: ${{ steps.push.outputs.image }}@${{ steps.push.outputs.digest }}
-        token: ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
+        token: ${{ secrets.PAT }}
 
   failure:
     name: Alert on Failure
@@ -81,7 +81,7 @@ jobs:
     if: ${{ always() && needs.push.result == 'failure' }}
     steps:
     - name: File Failure Alert Issue
-      uses: paketo-buildpacks/github-config/actions/issue/file@main
+      uses: initializ-buildpacks/github-config/actions/issue/file@main
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         repo: ${{ github.repository }}
