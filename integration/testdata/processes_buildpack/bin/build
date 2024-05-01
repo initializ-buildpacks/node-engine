@@ -5,8 +5,8 @@ set -u
 set -o pipefail
 
 function main() {
-  echo "Paketo Processes Buildpack"
-  cat << EOF > /layers/paketo-buildpacks_node-engine_processes/launch.toml
+  echo "Initializ Processes Buildpack"
+  cat << EOF > /layers/initializ-buildpacks_node-engine_processes/launch.toml
 [[processes]]
   type = "web"
   command = "node"
