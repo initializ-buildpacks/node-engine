@@ -224,15 +224,15 @@ jobs:
         with:
           name: metadata.json
 
-      - name: Update `checksum` and `uri` in metadata for ${{ matrix.includes.target }} ${{ matrix.includes.version }}
-        if: ${{ matrix.includes.checksum == '' && matrix.includes.uri == '' }}
-        uses: initializ-buildpacks/github-config/actions/dependency/update-metadata-json@main
-        with:
-          version: ${{ matrix.includes.version }}
-          target: ${{ matrix.includes.target }}
-          checksum: ${{ steps.get-checksum.outputs.checksum }}
-          uri: ${{ steps.upload.outputs.dependency-uri }}
-          file: "metadata.json"
+      # - name: Update `checksum` and `uri` in metadata for ${{ matrix.includes.target }} ${{ matrix.includes.version }}
+      #   if: ${{ matrix.includes.checksum == '' && matrix.includes.uri == '' }}
+      #   uses: initializ-buildpacks/github-config/actions/dependency/update-metadata-json@main
+      #   with:
+      #     version: ${{ matrix.includes.version }}
+      #     target: ${{ matrix.includes.target }}
+      #     checksum: ${{ steps.get-checksum.outputs.checksum }}
+      #     uri: ${{ steps.upload.outputs.dependency-uri }}
+      #     file: "metadata.json"
 
       - name: Upload modified metadata
         uses: actions/upload-artifact@v3
