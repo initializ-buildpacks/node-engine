@@ -215,6 +215,12 @@ jobs:
         with:
           name: '${{ needs.retrieve.outputs.id }}-${{ matrix.includes.version }}-${{ matrix.includes.target }}'
 
+      - name: Get artifact file name
+        id: get-file-names
+        run: |
+          echo "artifact-file=$(basename ./*.tgz)" >> "$GITHUB_OUTPUT"
+          echo "checksum-file=$(basename ./*.tgz.checksum)" >> "$GITHUB_OUTPUT"
+
       - name: Get Checksum
         id: get-checksum
         run: echo "checksum=$(cat ${{ steps.get-file-names.outputs.checksum-file }})" >> "$GITHUB_OUTPUT"
@@ -224,15 +230,15 @@ jobs:
         with:
           name: metadata.json
 
-      # - name: Update `checksum` and `uri` in metadata for ${{ matrix.includes.target }} ${{ matrix.includes.version }}
-      #   if: ${{ matrix.includes.checksum == '' && matrix.includes.uri == '' }}
-      #   uses: initializ-buildpacks/github-config/actions/dependency/update-metadata-json@main
-      #   with:
-      #     version: ${{ matrix.includes.version }}
-      #     target: ${{ matrix.includes.target }}
-      #     checksum: ${{ steps.get-checksum.outputs.checksum }}
-      #     uri: ${{ steps.upload.outputs.dependency-uri }}
-      #     file: "metadata.json"
+      - name: Update `checksum` and `uri` in metadata for ${{ matrix.includes.target }} ${{ matrix.includes.version }}
+        if: ${{ matrix.includes.checksum == '' && matrix.includes.uri == '' }}
+        uses: initializ-buildpacks/github-config/actions/dependency/update-metadata-json@main
+        with:
+          version: ${{ matrix.includes.version }}
+          target: ${{ matrix.includes.target }}
+          checksum: ${{ steps.get-checksum.outputs.checksum }}
+          uri: ${{ steps.upload.outputs.dependency-uri }}
+          file: "metadata.json"
 
       - name: Upload modified metadata
         uses: actions/upload-artifact@v3
@@ -261,7 +267,7 @@ jobs:
       - name: Checkout Branch
         uses: initializ-buildpacks/github-config/actions/pull-request/checkout-branch@main
         with:
-          branch: automation/dependencies/update-from-metadata
+          branch: automations/dependencies/update-from-metadata
 
       - name: Make Temporary Artifact Directory
         id: make-outputdir
@@ -294,11 +300,11 @@ jobs:
           keyid: ${{ secrets.INITIALIZ_BOT_GPG_SIGNING_KEY_ID }}
           key: ${{ secrets.INITIALIZ_BOT_GPG_SIGNING_KEY }}
 
-      - name: Push Branch 'automation/dependencies/update-from-metadata'
+      - name: Push Branch 'automations/dependencies/update-from-metadata'
         if: ${{ steps.commit.outputs.commit_sha != '' }}
         uses: initializ-buildpacks/github-config/actions/pull-request/push-branch@main
         with:
-          branch: automation/dependencies/update-from-metadata
+          branch: automations/dependencies/update-from-metadata
 
       - name: Open Pull Request
         if: ${{ steps.commit.outputs.commit_sha != '' }}
@@ -306,7 +312,7 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           title: "Updates buildpack.toml with ${{ steps.update.outputs.new-versions }}"
-          branch: automation/buildpack.toml/update-from-metadata
+          branch: automations/buildpack.toml/update-from-metadata
 
   failure:
     name: Alert on Failure
