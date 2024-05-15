@@ -129,7 +129,7 @@ func createDependencyMetadata(release NodeRelease, releaseSchedule ReleaseSchedu
 		PURL:            retrieve.GeneratePURL("node", version, checksum, url),
 		Licenses:        retrieve.LookupLicenses(url, upstream.DefaultDecompress),
 		DeprecationDate: deprecationDate,
-		Stacks:          []string{"io.buildpacks.stacks.bionic"},
+		// Stacks:          []string{"io.buildpacks.stacks.bionic"},
 	}
 
 	bionicDependency, err := versionology.NewDependency(dep, "bionic")

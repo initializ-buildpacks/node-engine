@@ -7,7 +7,7 @@ parent_dir="$(cd "$(dirname "$0")" && pwd)"
 extract_tarball() {
   rm -rf node
   mkdir node
-  tar -xf "tarball_path/node_v${version}_linux_x64_bionic_"*".tgz" -C node
+  tar -xf "tarball_path/node_v${version}_linux_x64_"*".tgz" -C node
 }
 
 check_version() {

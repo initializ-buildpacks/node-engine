@@ -1,4 +1,4 @@
-FROM paketobuildpacks/build:base
+FROM initializbuildpacks/securepacks-build:latest
 
 ARG cnb_uid=0
 ARG cnb_gid=0
