@@ -9,7 +9,7 @@ env:
   AWS_REGION : "us-east-1"   
 permissions:
   id-token: write   # This is required for requesting the JWT
-  contents: read    # This is required for actions/checkout
+  contents: write    # This is required for actions/checkout
 
 jobs:
   retrieve:
@@ -27,6 +27,7 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
+        
 
       - name: Setup Go
         uses: actions/setup-go@v3
@@ -326,6 +327,7 @@ jobs:
         if: ${{ steps.commit.outputs.commit_sha != '' }}
         uses: initializ-buildpacks/github-config/actions/pull-request/push-branch@main
         with:
+          token: ${{ secrets.PAT }}
           branch: automations/dependencies/update-from-metadata
 
       - name: Open Pull Request
