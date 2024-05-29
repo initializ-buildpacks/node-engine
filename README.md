@@ -1,19 +1,19 @@
-# Paketo Buildpack for Node Engine
+# Initializ Buildpack for Node Engine
 
-## `gcr.io/initializ-buildpacks/node-engine`
+## `https://hub.docker.com/r/initializbuildpacks/node-engine`
 
 The Node Engine CNB provides the Node binary distribution.  The buildpack
 installs the Node binary distribution onto the `$PATH` which makes it available
 for subsequent buildpacks and in the final running container.  Examples of
 buildpacks that might use the Node binary distribution are the [NPM
-CNB](https://github.com/paketo-buildpacks/npm) and [Yarn Install
-CNB](https://github.com/paketo-buildpacks/yarn-install)
+CNB](https://github.com/initializ-buildpacks/npm) and [Yarn Install
+CNB](https://github.com/initializ-buildpacks/yarn-install)
 
 ## Integration
 
 The Node Engine CNB provides `node` and `npm` as dependencies. Downstream buildpacks, like
-[Yarn Install CNB](https://github.com/paketo-buildpacks/yarn-install) or
-[NPM CNB](https://github.com/paketo-buildpacks/npm), can require the `node` dependency
+[Yarn Install CNB](https://github.com/initializ-buildpacks/yarn-install) or
+[NPM CNB](https://github.com/initializ-buildpacks/npm), can require the `node` dependency
 by generating a [Build Plan
 TOML](https://github.com/buildpacks/spec/blob/master/buildpack.md#build-plan-toml)
 file that looks like the following:
