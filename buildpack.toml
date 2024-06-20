@@ -140,6 +140,20 @@ api = "0.7"
     version = "20.13.1"
 
 
+  [[metadata.dependencies]]
+    checksum = "sha256:089a02cb62e9f914097c451b134d32e9455c0a11642e34836d2866cd0666e77c"
+    cpe = "cpe:2.3:a:nodejs:node.js:20.14.0:*:*:*:*:*:*:*"
+    deprecation_date = "2026-04-30T00:00:00Z"
+    id = "node"
+    licenses = ["0BSD", "Apache-2.0", "Artistic-2.0", "BSD-2-Clause", "BSD-3-Clause", "BSD-4-Clause", "BSD-Source-Code", "CC0-1.0", "ECL-2.0", "ICU", "MIT", "MIT-0", "SHL-0.5", "SHL-0.51", "Unicode-TOU"]
+    name = "Node Engine"
+    purl = "pkg:generic/node@v20.14.0?checksum=fedf8fa73b6f51c4ffcc5da8f86cd1ed381bc9dceae0829832c7d683a78b8e36&download_url=https://nodejs.org/dist/v20.14.0/node-v20.14.0-linux-x64.tar.xz"
+    source = "https://nodejs.org/dist/v20.14.0/node-v20.14.0-linux-x64.tar.xz"
+    source-checksum = "sha256:fedf8fa73b6f51c4ffcc5da8f86cd1ed381bc9dceae0829832c7d683a78b8e36"
+    stacks = ["Initializ Distroless Stack"]
+    uri = "https://initializ-buildpacks.s3.amazonaws.com/node/node_v20.14.0_linux_x64_bionic_089a02cb.tgz"
+    version = "20.14.0"
+
   [[metadata.dependency-constraints]]
     constraint = "16.*"
     id = "node"
